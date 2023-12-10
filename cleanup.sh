@@ -71,8 +71,8 @@ fi
 # GitOps Cleanup
 rm -rf manifest/app.yaml
 # For GitOps Firewall Rule
-if gcloud compute firewall-rules list --filter="name=$FIREWALL_RULES_NAME-gitops" --format="table(name)" | grep -q $FIREWALL_RULES_NAME-gitops; then
-    gcloud compute firewall-rules delete $FIREWALL_RULES_NAME-gitops --quiet 
+if gcloud compute firewall-rules list --filter="name=$FIREWALL_RULES_NAME-observability" --format="table(name)" | grep -q $FIREWALL_RULES_NAME-observability; then
+    gcloud compute firewall-rules delete $FIREWALL_RULES_NAME-observability --quiet 
 fi
 
 echo "\n #----------DONE----------# \n"

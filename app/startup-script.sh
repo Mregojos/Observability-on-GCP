@@ -1,6 +1,6 @@
 # Environment
-export VERSION="i"
-export APP_NAME="app-observability-i"
+export VERSION="ii"
+export APP_NAME="app-observability-ii"
 export DB_PASSWORD="password"
 
 export DB_CONTAINER_NAME="$APP_NAME-sql"

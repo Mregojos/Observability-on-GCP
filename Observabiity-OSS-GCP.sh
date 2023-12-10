@@ -1,45 +1,23 @@
 # Observability-OSS-GCP
 
-# GitOps Environment Variables
+# Environment Variables
 source env*
 echo "USERNAME:"
 read -s DOCKER_USERNAME
 export DOCKER_USERNAME=$DOCKER_USERNAME
 
 # Create a firewall
-gcloud compute --project=$(gcloud config get project) firewall-rules create $FIREWALL_RULES_NAME-gitops \
+gcloud compute --project=$(gcloud config get project) firewall-rules create $FIREWALL_RULES_NAME-observability \
     --direction=INGRESS --priority=1000 --network=default --action=ALLOW --rules=tcp:9000,tcp:8000,tcp:10000 --source-ranges=0.0.0.0/0
+    
+# Infrastructure (Run in another shell)
+source env*
+sh infra*
 
 # GitOps
 #-------------- Edited from GitOps on GCP Repo [START] --------------------#
-# Infrastructure
-sh infra*
-
 # kubectl and minikube
 sh kubectl-minikube.sh
-
-# GitOps
-sh GitOps.sh
-# kubectl get namespaces
-# cat ~/.kube/config
-# Access The Argo CD API Server
-kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
-# Run in another terminal and create a firewall (command below)
-kubectl port-forward svc/argocd-server -n argocd 8000:443 --address 0.0.0.0
-argocd admin initial-password -n argocd
-# USERNAME: admin
-# PASSWORD: <argocd admin initial-password -n argocd> #password
-# You can change it using the UI
-# argocd login <ARGOCD_SERVER>:PORT
-# argocd account update-password
-# New password: p@ssword
-
-# Create an application from a git repository
-# Create Apps Via CLI
-# kubectl config set-context --current --namespace=argocd
-# argocd app create guestbook --repo https://github.com/argoproj/argocd-example-apps.git --path guestbook --dest-server https://kubernetes.default.svc --dest-namespace default
-# argocd app create app --repo https://github.com/mregojos/GitOps-on-GCP.git --path manifest --dest-server https://kubernetes.default.svc --dest-namespace default
-# or Create Apps Via UI
 
 # Build the image and push to the hub
 cd app
@@ -75,7 +53,29 @@ kubectl get pods -n app
 # Delete namespace
 kubectl delete namespace app
 
-# GitOps App
+# App GitOps Deployment
+# GitOps
+sh GitOps.sh
+# kubectl get namespaces
+# cat ~/.kube/config
+# Access The Argo CD API Server
+kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
+# Run in another terminal and create a firewall (command below)
+kubectl port-forward svc/argocd-server -n argocd 8000:443 --address 0.0.0.0
+argocd admin initial-password -n argocd
+# USERNAME: admin
+# PASSWORD: <argocd admin initial-password -n argocd> #password
+# You can change it using the UI
+# argocd login <ARGOCD_SERVER>:PORT
+# argocd account update-password
+# New password: p@ssword
+
+# Create an application from a git repository
+# Create Apps Via CLI
+# kubectl config set-context --current --namespace=argocd
+# argocd app create guestbook --repo https://github.com/argoproj/argocd-example-apps.git --path guestbook --dest-server https://kubernetes.default.svc --dest-namespace default
+# argocd app create app --repo https://github.com/mregojos/GitOps-on-GCP.git --path manifest --dest-server https://kubernetes.default.svc --dest-namespace default
+# or Create Apps Via UI
 # Create an application from a git repository
 # Create Apps Via CLI
 # Create app.yaml manifest
@@ -97,8 +97,7 @@ argocd app delete app -y
 #-------------- Edited from GitOps on GCP Repo [END]--------------------#
 
 
-# Observability
-#-------------- [START] --------------------#
+#-------------- Observability [START] --------------------#
 # helm and Kube-Prometheus-Stack
 sh Observability-OSS.sh
 
@@ -108,3 +107,11 @@ kubectl get all -n monitoring
 kubectl port-forward svc/my-kube-prometheus-stack-grafana  10000:80 -n monitoring --address 0.0.0.0 
 # User: Admin
 # Password: prom-operator
+
+#-------------- Observability [END] --------------------#
+
+
+#-------------- Cleanup [START] --------------------#
+gcloud compute firewall-rules delete $FIREWALL_RULES_NAME-observability --quiet 
+
+#-------------- End [START] --------------------#
