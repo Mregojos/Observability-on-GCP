@@ -15,7 +15,7 @@ rm -rf ./*/app.yaml
 Yes or No:
 """
 read USER_INPUT
-if USER_INPUT = "Yes"; then
+if $USER_INPUT = "Yes"; then
     rm -rf ./app.yaml
     rm -rf ./*/app.yaml
 fi
