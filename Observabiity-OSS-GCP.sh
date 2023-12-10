@@ -6,17 +6,17 @@ echo "USERNAME:"
 read -s DOCKER_USERNAME
 export DOCKER_USERNAME=$DOCKER_USERNAME
 
+# Create a firewall
+gcloud compute --project=$(gcloud config get project) firewall-rules create $FIREWALL_RULES_NAME-gitops \
+    --direction=INGRESS --priority=1000 --network=default --action=ALLOW --rules=tcp:9000,tcp:8000,tcp:10000 --source-ranges=0.0.0.0/0
+
 # GitOps
-#-------------- [START] From GitOps on GCP Repo --------------------#
+#-------------- Edited from GitOps on GCP Repo [START] --------------------#
 # Infrastructure
 sh infra*
 
 # kubectl and minikube
 sh kubectl-minikube.sh
-
-# Create a firewall
-gcloud compute --project=$(gcloud config get project) firewall-rules create $FIREWALL_RULES_NAME-gitops \
-    --direction=INGRESS --priority=1000 --network=default --action=ALLOW --rules=tcp:9000,tcp:8000 --source-ranges=0.0.0.0/0
 
 # GitOps
 sh GitOps.sh
@@ -94,4 +94,17 @@ kubectl port-forward service/app-deployment 9000:9000 --address 0.0.0.0 -n defau
 argocd app delete app -y
 
 # or Create Apps Via UI
-#-------------- [END] From GitOps on GCP Repo --------------------#
+#-------------- Edited from GitOps on GCP Repo [END]--------------------#
+
+
+# Observability
+#-------------- [START] --------------------#
+# helm and Kube-Prometheus-Stack
+sh Observability-OSS.sh
+
+helm list -n monitoring
+kubectl get all -n monitoring
+# Port-forward
+kubectl port-forward svc/my-kube-prometheus-stack-grafana  8000:80 -n monitoring --address 0.0.0.0 
+# User: Admin
+# Password: prom-operator
