@@ -5,6 +5,10 @@
 ## Objective
 * To create Logging, Monitoring, and Alerting on GCP using Open-Source Software and Google Cloud Services.
 
+```sh
+# Observability-OSS-GCP.sh
+```
+
 ---
 Resources:
 * App Git Repository https://github.com/mregojos/model-deployment
