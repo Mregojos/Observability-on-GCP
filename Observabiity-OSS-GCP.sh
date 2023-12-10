@@ -105,6 +105,6 @@ sh Observability-OSS.sh
 helm list -n monitoring
 kubectl get all -n monitoring
 # Port-forward
-kubectl port-forward svc/my-kube-prometheus-stack-grafana  8000:80 -n monitoring --address 0.0.0.0 
+kubectl port-forward svc/my-kube-prometheus-stack-grafana  10000:80 -n monitoring --address 0.0.0.0 
 # User: Admin
 # Password: prom-operator
