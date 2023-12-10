@@ -8,3 +8,6 @@ cp -rf cleanup.sh ~/Observability-on-GCP/cleanup.sh
 cp -rf GitOps-on-GCP.sh ~/Observability-on-GCP/GitOps-on-GCP.sh
 cp -rf kubectl-minikube.sh ~/Observability-on-GCP/kubectl-minikube.sh
 cp -rf GitOps.sh ~/Observability-on-GCP/GitOps.sh
+
+cp -rf app/* ~/Observability-on-GCP/app
+cp -rf manifest/* ~/Observability-on-GCP/manifest
