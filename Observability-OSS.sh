@@ -12,3 +12,11 @@ helm repo add prometheus-community https://prometheus-community.github.io/helm-c
 # I add namespace monitoring
 kubectl create namespace monitoring
 helm install my-kube-prometheus-stack prometheus-community/kube-prometheus-stack --version 52.1.0 -n monitoring
+
+
+
+# Option B
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm install bitnami/prometheus --generate-name
+helm install bitnami/grafana --generate-name
+helm install bitnami/kube-prometheus --generate-name

@@ -98,9 +98,8 @@ argocd app delete app -y
 
 
 #-------------- Observability [START] --------------------#
-# helm and Kube-Prometheus-Stack
+# Option A: helm and Kube-Prometheus-Stack
 sh Observability-OSS.sh
-
 helm list -n monitoring
 kubectl get all -n monitoring
 # Port-forward
@@ -108,6 +107,25 @@ kubectl port-forward svc/my-kube-prometheus-stack-grafana  10000:80 -n monitorin
 # User: Admin
 # Password: prom-operator
 
+# Option B
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm search repo prometheus
+helm install bitnami/prometheus --generate-name
+helm install bitnami/grafana --generate-name
+helm list
+kubectl get all
+# Run in another shell 
+kubectl port-forward service/grafana-<...> 8000:3000 --address 0.0.0.0
+# For Grafana UI
+# USER: admin
+# Password: Use the command given
+!helm search repo prometheus
+# Kube Prometheus
+!helm install bitnami/kube-prometheus --generate-name
+!kubectl get svc
+# Run in another shell 
+# !kubectl port-forward svc/kube-prometheus-1699111085-prometheus  9000:9090 --address 0.0.0.0
+!kubectl get all
 #-------------- Observability [END] --------------------#
 
 
