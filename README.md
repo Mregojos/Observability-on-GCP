@@ -11,6 +11,7 @@
 
 ---
 Resources:
+* Observability on GCP Git Repository https://github.com/mregojos/Observability-on-GCP
 * App Git Repository https://github.com/mregojos/model-deployment
 * GitOps Git Repository https://github.com/mregojos/GitOps-on-GCP
 * Tech Stack (GCP Edition) https://github.com/mregojos/tech-stack
