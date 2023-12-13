@@ -5,6 +5,7 @@ source env*
 echo "USERNAME:"
 read -s DOCKER_USERNAME
 export DOCKER_USERNAME=$DOCKER_USERNAME
+echo $DOCKER_USERNAME
 
 # Create a firewall
 gcloud compute --project=$(gcloud config get project) firewall-rules create $FIREWALL_RULES_NAME-observability \
