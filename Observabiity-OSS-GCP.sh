@@ -16,7 +16,7 @@ source env*
 sh infra*
 
 # GitOps
-#-------------- Edited from GitOps on GCP Repo [START] --------------------#
+#-------------- App Deployment using container orchestration [START] --------------------#
 # kubectl and minikube
 sh kubectl-minikube.sh
 
@@ -54,7 +54,7 @@ kubectl get pods -n app
 # Delete namespace
 kubectl delete namespace app
 
-# App GitOps Deployment
+# Option B: App GitOps Deployment
 # GitOps
 sh GitOps.sh
 # kubectl get namespaces
