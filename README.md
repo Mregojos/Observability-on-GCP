@@ -3,7 +3,7 @@
 ---
 
 ## Objective
-* To create Logging, Monitoring, and Alerting on GCP using Open-Source Software and Google Cloud Services.
+* To use Open-Source Observability Software and Google Cloud Operations Suite in a deployed app
 
 ```sh
 # Observability-OSS-GCP.sh
