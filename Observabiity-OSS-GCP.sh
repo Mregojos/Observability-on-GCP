@@ -17,6 +17,13 @@ sh infra*
 
 # GitOps
 #-------------- App Deployment using container orchestration [START] --------------------#
+# Environment Variables
+source env*
+echo "USERNAME:"
+read -s DOCKER_USERNAME
+export DOCKER_USERNAME=$DOCKER_USERNAME
+echo $DOCKER_USERNAME
+
 # kubectl and minikube
 sh kubectl-minikube.sh
 

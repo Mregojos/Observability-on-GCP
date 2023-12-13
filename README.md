@@ -3,7 +3,7 @@
 ---
 
 ## Objective
-* To use Open-Source Observability Software and Google Cloud Operations Suite in a deployed app
+* To use open-source observability software and Google Cloud Operations Suite in a deployed app
 
 ```sh
 # Observability-OSS-GCP.sh
